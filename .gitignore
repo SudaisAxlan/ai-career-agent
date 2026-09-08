@@ -1,0 +1,73 @@
+# Python
+
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+
+venv/
+.venv/
+env/
+ENV/
+
+# Environment Variables / Secrets
+
+.env
+.env.*
+!.env.example
+
+# IDE / Editors
+
+.vscode/
+.idea/
+*.swp
+*.swo
+
+
+# Build / Packaging
+
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Logs
+
+*.log
+logs/
+
+# Database / Local Data
+
+*.db
+*.sqlite
+*.sqlite3
+
+
+# Local AI / Vector Databases
+
+chroma/
+chroma_db/
+vectorstore/
+qdrant_storage/
+
+# Uploaded / Generated Files
+
+uploads/
+temp/
+tmp/
+generated/
+*.pdf
+
+# OS / Python cache
+
+.pyre/
+.mypy_cache/
+.ruff_cache/
+
+# Secrets / Credentials
+
+*.pem
+*.key
+secrets.json
+credentials.json
