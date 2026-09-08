@@ -7,6 +7,7 @@ from langchain.tools import tool
 
 load_dotenv()
 
+
 tavily = TavilyClient(
     api_key=os.getenv("TAVILY_API_KEY")
 )
