@@ -1,0 +1,2991 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Career Agent</title>
+
+    <!-- Professional Favicon -->
+    <link
+        rel="icon"
+        type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230b1220'/%3E%3Cpath d='M25 70L45 25L75 70H60L53 55H38L32 70H25ZM42 45H50L46 35L42 45Z' fill='white'/%3E%3C/svg%3E"
+    >
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f6f8fb;
+            color: #111827;
+        }
+
+        button,
+        input {
+            font-family: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+
+        /* =========================================
+           AUTH PAGE
+        ========================================= */
+
+        .auth-page {
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            background:
+                radial-gradient(
+                    circle at top left,
+                    #dbeafe,
+                    transparent 35%
+                ),
+                #f6f8fb;
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 430px;
+
+            background: white;
+
+            padding: 35px;
+
+            border-radius: 20px;
+
+            border: 1px solid #e5e7eb;
+
+            box-shadow:
+                0 20px 60px rgba(15, 23, 42, 0.08);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            margin-bottom: 30px;
+        }
+
+        .brand-logo {
+            width: 45px;
+            height: 45px;
+
+            background: #0f172a;
+
+            color: white;
+
+            border-radius: 12px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-weight: 800;
+        }
+
+        .brand-text h1 {
+            font-size: 19px;
+        }
+
+        .brand-text p {
+            color: #64748b;
+
+            font-size: 12px;
+
+            margin-top: 3px;
+        }
+
+        .auth-card h2 {
+            font-size: 28px;
+
+            margin-bottom: 8px;
+        }
+
+        .auth-description {
+            color: #64748b;
+
+            font-size: 14px;
+
+            margin-bottom: 25px;
+
+            line-height: 1.5;
+        }
+
+
+        /* FORM */
+
+        .form-group {
+            margin-bottom: 17px;
+        }
+
+        .form-group label {
+            display: block;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            margin-bottom: 7px;
+        }
+
+        .form-group input {
+            width: 100%;
+
+            padding: 13px 14px;
+
+            border: 1px solid #dbe1e8;
+
+            border-radius: 10px;
+
+            outline: none;
+
+            font-size: 14px;
+        }
+
+        .form-group input:focus {
+            border-color: #2563eb;
+        }
+
+
+        /* BUTTON */
+
+        .primary-button {
+            width: 100%;
+
+            padding: 13px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: #2563eb;
+
+            color: white;
+
+            font-weight: 700;
+
+            font-size: 14px;
+        }
+
+        .primary-button:hover {
+            background: #1d4ed8;
+        }
+
+
+        /* SWITCH */
+
+        .auth-switch {
+            text-align: center;
+
+            margin-top: 20px;
+
+            color: #64748b;
+
+            font-size: 13px;
+        }
+
+        .auth-switch button {
+            border: none;
+
+            background: none;
+
+            color: #2563eb;
+
+            font-weight: 700;
+        }
+
+
+        /* =========================================
+           APPLICATION
+        ========================================= */
+
+        .app {
+            display: none;
+
+            min-height: 100vh;
+        }
+
+
+        /* =========================================
+           SIDEBAR
+        ========================================= */
+
+        .sidebar {
+            position: fixed;
+
+            left: 0;
+            top: 0;
+            bottom: 0;
+
+            width: 245px;
+
+            background: #0f172a;
+
+            color: white;
+
+            padding: 25px 16px;
+
+            display: flex;
+
+            flex-direction: column;
+        }
+
+        .sidebar-brand {
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding: 0 10px;
+
+            margin-bottom: 35px;
+        }
+
+        .sidebar-logo {
+            width: 38px;
+            height: 38px;
+
+            background: white;
+
+            color: #0f172a;
+
+            border-radius: 10px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-weight: 900;
+        }
+
+        .sidebar-brand strong {
+            font-size: 16px;
+        }
+
+        .sidebar-brand span {
+            display: block;
+
+            font-size: 10px;
+
+            color: #94a3b8;
+
+            margin-top: 2px;
+        }
+
+
+        /* NAV */
+
+        .nav {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 5px;
+        }
+
+        .nav button {
+            border: none;
+
+            background: transparent;
+
+            color: #94a3b8;
+
+            text-align: left;
+
+            padding: 12px;
+
+            border-radius: 9px;
+
+            font-size: 14px;
+        }
+
+        .nav button:hover,
+        .nav button.active {
+            background: #1e293b;
+
+            color: white;
+        }
+
+
+        /* SIDEBAR USER */
+
+        .sidebar-bottom {
+            margin-top: auto;
+        }
+
+        .user-box {
+            background: #1e293b;
+
+            padding: 13px;
+
+            border-radius: 10px;
+
+            margin-bottom: 10px;
+        }
+
+        .user-box strong {
+            display: block;
+
+            font-size: 13px;
+        }
+
+        .user-box span {
+            display: block;
+
+            color: #94a3b8;
+
+            font-size: 11px;
+
+            margin-top: 3px;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+
+            white-space: nowrap;
+        }
+
+        .logout-button {
+            width: 100%;
+
+            padding: 10px;
+
+            border: 1px solid #334155;
+
+            border-radius: 8px;
+
+            background: transparent;
+
+            color: #cbd5e1;
+        }
+
+        .logout-button:hover {
+            background: #1e293b;
+        }
+
+
+        /* =========================================
+           MAIN
+        ========================================= */
+
+        .main {
+            margin-left: 245px;
+
+            min-height: 100vh;
+
+            padding: 35px;
+        }
+
+        .page {
+            display: none;
+
+            max-width: 1100px;
+
+            margin: auto;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            font-size: 30px;
+        }
+
+        .page-header p {
+            margin-top: 7px;
+
+            color: #64748b;
+        }
+
+
+        /* =========================================
+           HOME
+        ========================================= */
+
+        .hero {
+            background: #0f172a;
+
+            color: white;
+
+            border-radius: 18px;
+
+            padding: 35px;
+
+            margin-bottom: 25px;
+        }
+
+        .hero small {
+            color: #93c5fd;
+
+            font-weight: 700;
+        }
+
+        .hero h1 {
+            font-size: 34px;
+
+            margin-top: 8px;
+        }
+
+        .hero p {
+            max-width: 700px;
+
+            color: #cbd5e1;
+
+            margin-top: 12px;
+
+            line-height: 1.7;
+        }
+
+
+        /* HOW IT WORKS */
+
+        .how-title {
+            margin-bottom: 15px;
+        }
+
+        .workflow {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 15px;
+
+            margin-bottom: 30px;
+        }
+
+        .workflow-card {
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 14px;
+
+            padding: 22px;
+        }
+
+        .workflow-number {
+            font-size: 12px;
+
+            color: #2563eb;
+
+            font-weight: 800;
+        }
+
+        .workflow-card h3 {
+            font-size: 16px;
+
+            margin-top: 10px;
+
+            margin-bottom: 7px;
+        }
+
+        .workflow-card p {
+            color: #64748b;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+
+        /* ACTION CARDS */
+
+        .cards {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 18px;
+        }
+
+        .action-card {
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 14px;
+
+            padding: 25px;
+        }
+
+        .action-card h3 {
+            margin-bottom: 7px;
+        }
+
+        .action-card p {
+            color: #64748b;
+
+            font-size: 13px;
+
+            line-height: 1.6;
+
+            margin-bottom: 18px;
+        }
+
+        .small-button {
+            border: none;
+
+            background: #2563eb;
+
+            color: white;
+
+            padding: 10px 15px;
+
+            border-radius: 8px;
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+
+        /* =========================================
+           FORM CARD
+        ========================================= */
+
+        .form-card {
+            max-width: 650px;
+
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 16px;
+
+            padding: 25px;
+        }
+
+        .file-input {
+            border: 2px dashed #cbd5e1;
+
+            padding: 35px 20px;
+
+            text-align: center;
+
+            border-radius: 12px;
+
+            margin-bottom: 20px;
+        }
+
+        .file-input p {
+            margin-top: 7px;
+
+            color: #64748b;
+
+            font-size: 13px;
+        }
+
+        .file-input input {
+            margin-top: 15px;
+        }
+
+        .status {
+            margin-top: 15px;
+
+            font-size: 13px;
+
+            color: #64748b;
+        }
+
+
+        /* =========================================
+           JOB SEARCH
+        ========================================= */
+
+        .search-box {
+            display: flex;
+
+            gap: 10px;
+
+            margin-bottom: 25px;
+        }
+
+        .search-box input {
+            flex: 1;
+
+            padding: 13px;
+
+            border: 1px solid #dbe1e8;
+
+            border-radius: 9px;
+
+            outline: none;
+        }
+
+        .search-box input:focus {
+            border-color: #2563eb;
+        }
+
+        .search-box button {
+            border: none;
+
+            padding: 0 22px;
+
+            border-radius: 9px;
+
+            background: #2563eb;
+
+            color: white;
+
+            font-weight: 700;
+        }
+
+
+        /* JOBS */
+
+        .jobs {
+            display: grid;
+
+            gap: 15px;
+        }
+
+        .job-card {
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 14px;
+
+            padding: 22px;
+        }
+
+        .job-top {
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 15px;
+        }
+
+        .job-card h3 {
+            font-size: 18px;
+        }
+
+        .company {
+            color: #64748b;
+
+            margin-top: 5px;
+
+            font-size: 13px;
+        }
+
+        .score {
+            min-width: 70px;
+
+            height: 32px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 20px;
+
+            background: #dcfce7;
+
+            color: #166534;
+
+            font-size: 12px;
+
+            font-weight: 800;
+        }
+
+        .job-info {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 8px;
+
+            margin: 15px 0;
+        }
+
+        .job-info span {
+            background: #f1f5f9;
+
+            padding: 6px 9px;
+
+            border-radius: 6px;
+
+            font-size: 11px;
+
+            color: #475569;
+        }
+
+        .job-description {
+            color: #475569;
+
+            font-size: 13px;
+
+            line-height: 1.6;
+
+            margin-bottom: 15px;
+        }
+
+        .why-match {
+            background: #eff6ff;
+
+            color: #1e40af;
+
+            padding: 12px;
+
+            border-radius: 8px;
+
+            font-size: 12px;
+
+            margin-bottom: 15px;
+        }
+
+        .apply {
+            display: inline-block;
+
+            text-decoration: none;
+
+            background: #0f172a;
+
+            color: white;
+
+            padding: 10px 15px;
+
+            border-radius: 8px;
+
+            font-size: 12px;
+
+            font-weight: 700;
+        }
+
+
+        /* =========================================
+           ABOUT
+        ========================================= */
+
+        .about-card {
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 16px;
+
+            padding: 30px;
+
+            line-height: 1.7;
+
+            color: #475569;
+        }
+
+        .about-card h2 {
+            color: #111827;
+
+            margin-bottom: 5px;
+        }
+
+        .about-card h3 {
+            color: #111827;
+
+            margin-top: 25px;
+
+            margin-bottom: 7px;
+        }
+
+        .about-card a {
+            color: #2563eb;
+        }
+
+
+        /* =========================================
+           LOADING
+        ========================================= */
+
+        .loading {
+            position: fixed;
+
+            inset: 0;
+
+            background: rgba(15, 23, 42, 0.5);
+
+            display: none;
+
+            align-items: center;
+
+            justify-content: center;
+
+            z-index: 999;
+        }
+
+        .loading-box {
+            background: white;
+
+            padding: 25px 35px;
+
+            border-radius: 12px;
+
+            font-weight: 700;
+        }
+
+
+        /* =========================================
+           TOAST
+        ========================================= */
+
+        .toast {
+            position: fixed;
+
+            right: 20px;
+
+            bottom: 20px;
+
+            background: #0f172a;
+
+            color: white;
+
+            padding: 13px 18px;
+
+            border-radius: 9px;
+
+            display: none;
+
+            z-index: 1000;
+
+            font-size: 13px;
+        }
+
+
+        /* =========================================
+           MOBILE
+        ========================================= */
+
+        @media(max-width: 800px) {
+
+            .sidebar {
+                width: 100%;
+
+                height: auto;
+
+                position: relative;
+
+                padding: 15px;
+            }
+
+            .sidebar-bottom {
+                display: none;
+            }
+
+            .nav {
+                flex-direction: row;
+
+                overflow-x: auto;
+            }
+
+            .nav button {
+                white-space: nowrap;
+            }
+
+            .main {
+                margin-left: 0;
+
+                padding: 20px;
+            }
+
+            .workflow {
+                grid-template-columns:
+                    1fr 1fr;
+            }
+
+            .cards {
+                grid-template-columns:
+                    1fr;
+            }
+
+            .search-box {
+                flex-direction: column;
+            }
+
+            .search-box button {
+                padding: 12px;
+            }
+
+        }
+
+
+        @media(max-width: 500px) {
+
+            .workflow {
+                grid-template-columns:
+                    1fr;
+            }
+
+            .hero h1 {
+                font-size: 27px;
+            }
+
+            .job-top {
+                flex-direction: column;
+            }
+
+            .auth-card {
+                padding: 25px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     AUTHENTICATION
+===================================================== -->
+
+<div
+    id="authPage"
+    class="auth-page"
+>
+
+    <div class="auth-card">
+
+
+        <!-- BRAND -->
+
+        <div class="brand">
+
+            <div class="brand-logo">
+                AI
+            </div>
+
+            <div class="brand-text">
+
+                <h1>
+                    AI Career Agent
+                </h1>
+
+                <p>
+                    Intelligent Career Assistant
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             LOGIN
+        ================================================== -->
+
+        <div id="loginForm">
+
+            <h2>
+                Welcome back
+            </h2>
+
+            <p class="auth-description">
+                Login to continue to your AI career workspace.
+            </p>
+
+
+            <div class="form-group">
+
+                <label>
+                    Email
+                </label>
+
+                <input
+                    id="loginEmail"
+                    type="email"
+                    placeholder="you@example.com"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Password
+                </label>
+
+                <input
+                    id="loginPassword"
+                    type="password"
+                    placeholder="Your password"
+                >
+
+            </div>
+
+
+            <button
+                class="primary-button"
+                onclick="loginUser()"
+            >
+                Login
+            </button>
+
+
+            <div class="auth-switch">
+
+                Don't have an account?
+
+                <button
+                    onclick="showRegister()"
+                >
+                    Create Account
+                </button>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             CREATE ACCOUNT
+        ================================================== -->
+
+        <div
+            id="registerForm"
+            style="display:none;"
+        >
+
+            <h2>
+                Create account
+            </h2>
+
+            <p class="auth-description">
+                Create your personal AI career workspace.
+            </p>
+
+
+            <div class="form-group">
+
+                <label>
+                    Name
+                </label>
+
+                <input
+                    id="registerName"
+                    type="text"
+                    placeholder="Your name"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Email
+                </label>
+
+                <input
+                    id="registerEmail"
+                    type="email"
+                    placeholder="you@example.com"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Password
+                </label>
+
+                <input
+                    id="registerPassword"
+                    type="password"
+                    placeholder="Create password"
+                >
+
+            </div>
+
+
+            <button
+                class="primary-button"
+                onclick="createAccount()"
+            >
+                Create Account
+            </button>
+
+
+            <div class="auth-switch">
+
+                Already have an account?
+
+                <button
+                    onclick="showLogin()"
+                >
+                    Login
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     MAIN APPLICATION
+===================================================== -->
+
+<div
+    id="app"
+    class="app"
+>
+
+
+    <!-- =================================================
+         SIDEBAR
+    ================================================== -->
+
+    <aside class="sidebar">
+
+
+        <div class="sidebar-brand">
+
+            <div class="sidebar-logo">
+                AI
+            </div>
+
+            <div>
+
+                <strong>
+                    AI Career Agent
+                </strong>
+
+                <span>
+                    Career Intelligence
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="nav">
+
+            <button
+                id="nav-home"
+                onclick="showSection('home')"
+            >
+                🏠 Home
+            </button>
+
+
+            <button
+                id="nav-resume"
+                onclick="showSection('resume')"
+            >
+                📄 Resume
+            </button>
+
+
+            <button
+                id="nav-jobs"
+                onclick="showSection('jobs')"
+            >
+                💼 Find Jobs
+            </button>
+
+
+            <button
+                id="nav-about"
+                onclick="showSection('about')"
+            >
+                ℹ️ About
+            </button>
+
+        </nav>
+
+
+        <!-- USER -->
+
+        <div class="sidebar-bottom">
+
+            <div class="user-box">
+
+                <strong
+                    id="sidebarUserName"
+                >
+                    User
+                </strong>
+
+                <span
+                    id="sidebarUserEmail"
+                >
+                    email
+                </span>
+
+            </div>
+
+
+            <button
+                class="logout-button"
+                onclick="logout()"
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =================================================
+         MAIN CONTENT
+    ================================================== -->
+
+    <main class="main">
+
+
+        <!-- =================================================
+             HOME
+        ================================================== -->
+
+        <section
+            id="home"
+            class="page"
+        >
+
+
+            <div class="hero">
+
+                <small>
+                    AI CAREER INTELLIGENCE
+                </small>
+
+                <h1
+                    id="welcomeText"
+                >
+                    Welcome
+                </h1>
+
+                <p>
+
+                    Upload your resume, tell the AI agent
+                    what type of job you want, and let the
+                    agent search and analyze real job
+                    opportunities based on your profile.
+
+                </p>
+
+            </div>
+
+
+
+            <h2 class="how-title">
+                How it works
+            </h2>
+
+
+            <div class="workflow">
+
+
+                <div class="workflow-card">
+
+                    <div class="workflow-number">
+                        01 · ACCOUNT
+                    </div>
+
+                    <h3>
+                        Create account
+                    </h3>
+
+                    <p>
+                        Create your personal career workspace.
+                    </p>
+
+                </div>
+
+
+
+                <div class="workflow-card">
+
+                    <div class="workflow-number">
+                        02 · RESUME
+                    </div>
+
+                    <h3>
+                        Upload resume
+                    </h3>
+
+                    <p>
+                        Your PDF is extracted and stored
+                        for AI analysis.
+                    </p>
+
+                </div>
+
+
+
+                <div class="workflow-card">
+
+                    <div class="workflow-number">
+                        03 · AI SEARCH
+                    </div>
+
+                    <h3>
+                        Search jobs
+                    </h3>
+
+                    <p>
+                        AI searches and analyzes real jobs
+                        against your profile.
+                    </p>
+
+                </div>
+
+
+
+                <div class="workflow-card">
+
+                    <div class="workflow-number">
+                        04 · APPLY
+                    </div>
+
+                    <h3>
+                        Apply
+                    </h3>
+
+                    <p>
+                        Review matches and apply directly.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="cards">
+
+
+                <div class="action-card">
+
+                    <h3>
+                        Upload your resume
+                    </h3>
+
+                    <p>
+
+                        Upload your latest PDF resume so
+                        the AI agent can understand your
+                        skills and experience.
+
+                    </p>
+
+                    <button
+                        class="small-button"
+                        onclick="showSection('resume')"
+                    >
+                        Upload Resume
+                    </button>
+
+                </div>
+
+
+
+                <div class="action-card">
+
+                    <h3>
+                        Find matching jobs
+                    </h3>
+
+                    <p>
+
+                        Enter the job title you want and
+                        let the AI agent find suitable
+                        opportunities.
+
+                    </p>
+
+                    <button
+                        class="small-button"
+                        onclick="showSection('jobs')"
+                    >
+                        Find Jobs
+                    </button>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             RESUME
+        ================================================== -->
+
+        <section
+            id="resume"
+            class="page"
+        >
+
+
+            <div class="page-header">
+
+                <h1>
+                    Upload Resume
+                </h1>
+
+                <p>
+                    Upload your PDF resume for AI analysis.
+                </p>
+
+            </div>
+
+
+
+            <div class="form-card">
+
+
+                <div class="file-input">
+
+                    <strong>
+                        Select your resume PDF
+                    </strong>
+
+                    <p>
+                        PDF files only
+                    </p>
+
+
+                    <input
+                        id="resumeFile"
+                        type="file"
+                        accept=".pdf,application/pdf"
+                    >
+
+                </div>
+
+
+                <button
+                    class="primary-button"
+                    onclick="uploadResume()"
+                >
+                    Upload Resume
+                </button>
+
+
+                <div
+                    id="resumeStatus"
+                    class="status"
+                ></div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             JOBS
+        ================================================== -->
+
+        <section
+            id="jobs"
+            class="page"
+        >
+
+
+            <div class="page-header">
+
+                <h1>
+                    Find Jobs
+                </h1>
+
+                <p>
+                    Tell the AI agent what job you are looking for.
+                </p>
+
+            </div>
+
+
+
+            <div class="search-box">
+
+                <input
+                    id="jobTitle"
+                    type="text"
+                    placeholder="Example: Machine Learning Internship in Karachi"
+                >
+
+
+                <button
+                    onclick="searchJobs()"
+                >
+                    Run AI Agent
+                </button>
+
+            </div>
+
+
+            <div
+                id="jobsContainer"
+                class="jobs"
+            ></div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             ABOUT
+        ================================================== -->
+
+        <section
+            id="about"
+            class="page"
+        >
+
+
+            <div class="page-header">
+
+                <h1>
+                    About
+                </h1>
+
+                <p>
+                    About the AI Career Agent.
+                </p>
+
+            </div>
+
+
+
+            <div class="about-card">
+
+
+                <h2>
+                    Sudais Azlan
+                </h2>
+
+                <p>
+                    AI Engineer · Software Engineer
+                </p>
+
+
+                <p style="margin-top:15px;">
+
+                    I'm Sudais Azlan, an AI Engineer and
+                    Software Engineer focused on artificial
+                    intelligence, generative AI, software
+                    systems, and building products from
+                    idea to reality.
+
+                </p>
+
+
+                <h3>
+                    What I work on
+                </h3>
+
+                <p>
+
+                    Artificial Intelligence, Generative AI,
+                    backend engineering, full-stack development,
+                    APIs, automation, and product engineering.
+
+                </p>
+
+
+                <h3>
+                    Vision
+                </h3>
+
+                <p>
+                    Build technology that makes people more capable.
+                </p>
+
+
+                <h3>
+                    Mission
+                </h3>
+
+                <p>
+                    Turn complexity into useful, dependable software.
+                </p>
+
+
+                <h3>
+                    Website
+                </h3>
+
+                <p>
+
+                    <a
+                        href="https://www.sudaisazlan.com/"
+                        target="_blank"
+                    >
+                        Visit sudaisazlan.com
+                    </a>
+
+                </p>
+
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+
+<!-- =====================================================
+     LOADING
+===================================================== -->
+
+<div
+    id="loading"
+    class="loading"
+>
+
+    <div class="loading-box">
+
+        <span id="loadingText">
+            Processing...
+        </span>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     TOAST
+===================================================== -->
+
+<div
+    id="toast"
+    class="toast"
+></div>
+
+
+
+<script>
+
+
+/* =====================================================
+   API
+===================================================== */
+
+const API_URL =
+    "http://127.0.0.1:8000";
+
+
+/* =====================================================
+   USER DATA
+===================================================== */
+
+let USER_ID =
+    localStorage.getItem(
+        "career_user_id"
+    );
+
+let USER_NAME =
+    localStorage.getItem(
+        "career_user_name"
+    );
+
+let USER_EMAIL =
+    localStorage.getItem(
+        "career_user_email"
+    );
+
+let RESUME_ID =
+    localStorage.getItem(
+        "career_resume_id"
+    );
+
+
+/* =====================================================
+   START APPLICATION
+===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        /*
+         * USER_ID exists:
+         * User is already logged in.
+         */
+
+        if (USER_ID) {
+
+            showApp();
+
+            showSection(
+                "home"
+            );
+
+        }
+
+        /*
+         * USER_ID doesn't exist:
+         * Show Login.
+         */
+
+        else {
+
+            showAuth();
+
+            showLogin();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   AUTH PAGE
+===================================================== */
+
+function showAuth() {
+
+    document.getElementById(
+        "authPage"
+    ).style.display = "flex";
+
+    document.getElementById(
+        "app"
+    ).style.display = "none";
+
+}
+
+
+function showApp() {
+
+    document.getElementById(
+        "authPage"
+    ).style.display = "none";
+
+    document.getElementById(
+        "app"
+    ).style.display = "block";
+
+    updateUserInfo();
+
+}
+
+
+/* =====================================================
+   LOGIN / REGISTER SWITCH
+===================================================== */
+
+function showLogin() {
+
+    document.getElementById(
+        "loginForm"
+    ).style.display = "block";
+
+    document.getElementById(
+        "registerForm"
+    ).style.display = "none";
+
+}
+
+
+function showRegister() {
+
+    document.getElementById(
+        "loginForm"
+    ).style.display = "none";
+
+    document.getElementById(
+        "registerForm"
+    ).style.display = "block";
+
+}
+
+
+/* =====================================================
+   CREATE ACCOUNT
+===================================================== */
+
+async function createAccount() {
+
+    const name =
+        document.getElementById(
+            "registerName"
+        ).value.trim();
+
+
+    const email =
+        document.getElementById(
+            "registerEmail"
+        ).value.trim();
+
+
+    const password =
+        document.getElementById(
+            "registerPassword"
+        ).value.trim();
+
+
+    if (
+        !name ||
+        !email ||
+        !password
+    ) {
+
+        showToast(
+            "Please fill all fields."
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        showLoading(
+            "Creating account..."
+        );
+
+
+        const response =
+            await fetch(
+                `${API_URL}/users`,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        name: name,
+
+                        email: email,
+
+                        password: password
+
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.detail ||
+                "Account creation failed."
+            );
+
+        }
+
+
+        /*
+         * SAVE USER
+         */
+
+        USER_ID =
+            data.id;
+
+        USER_NAME =
+            data.name;
+
+        USER_EMAIL =
+            data.email;
+
+
+        localStorage.setItem(
+            "career_user_id",
+            USER_ID
+        );
+
+        localStorage.setItem(
+            "career_user_name",
+            USER_NAME
+        );
+
+        localStorage.setItem(
+            "career_user_email",
+            USER_EMAIL
+        );
+
+
+        /*
+         * OPEN HOME
+         */
+
+        showApp();
+
+        showSection(
+            "home"
+        );
+
+
+        showToast(
+            "Account created successfully."
+        );
+
+
+    }
+    catch (error) {
+
+        showToast(
+            error.message
+        );
+
+    }
+    finally {
+
+        hideLoading();
+
+    }
+
+}
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+async function loginUser() {
+
+    const email =
+        document.getElementById(
+            "loginEmail"
+        ).value.trim();
+
+
+    const password =
+        document.getElementById(
+            "loginPassword"
+        ).value.trim();
+
+
+    if (
+        !email ||
+        !password
+    ) {
+
+        showToast(
+            "Please enter email and password."
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        showLoading(
+            "Logging in..."
+        );
+
+
+        /*
+         * CALL BACKEND LOGIN API
+         */
+
+        const response =
+            await fetch(
+                `${API_URL}/auth/login`,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        email: email,
+
+                        password: password
+
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.detail ||
+                "Invalid email or password."
+            );
+
+        }
+
+
+        /*
+         * SAVE USER
+         */
+
+        USER_ID =
+            data.user_id;
+
+        USER_NAME =
+            data.name;
+
+        USER_EMAIL =
+            data.email;
+
+
+        localStorage.setItem(
+            "career_user_id",
+            USER_ID
+        );
+
+        localStorage.setItem(
+            "career_user_name",
+            USER_NAME
+        );
+
+        localStorage.setItem(
+            "career_user_email",
+            USER_EMAIL
+        );
+
+
+        /*
+         * OPEN HOME
+         */
+
+        showApp();
+
+        showSection(
+            "home"
+        );
+
+
+        showToast(
+            "Login successful."
+        );
+
+
+    }
+    catch (error) {
+
+        showToast(
+            error.message
+        );
+
+    }
+    finally {
+
+        hideLoading();
+
+    }
+
+}
+
+
+/* =====================================================
+   UPDATE USER INFO
+===================================================== */
+
+function updateUserInfo() {
+
+    document.getElementById(
+        "sidebarUserName"
+    ).textContent =
+        USER_NAME || "User";
+
+
+    document.getElementById(
+        "sidebarUserEmail"
+    ).textContent =
+        USER_EMAIL || "";
+
+
+    document.getElementById(
+        "welcomeText"
+    ).textContent =
+        `Welcome, ${USER_NAME || "User"}`;
+
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+function logout() {
+
+    localStorage.removeItem(
+        "career_user_id"
+    );
+
+    localStorage.removeItem(
+        "career_user_name"
+    );
+
+    localStorage.removeItem(
+        "career_user_email"
+    );
+
+    localStorage.removeItem(
+        "career_resume_id"
+    );
+
+
+    USER_ID = null;
+
+    USER_NAME = null;
+
+    USER_EMAIL = null;
+
+    RESUME_ID = null;
+
+
+    document.getElementById(
+        "app"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "authPage"
+    ).style.display = "flex";
+
+
+    showLogin();
+
+
+    showToast(
+        "Logged out successfully."
+    );
+
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+function showSection(
+    sectionName
+) {
+
+    /*
+     * Only logged-in users can
+     * access the application.
+     */
+
+    if (!USER_ID) {
+
+        showAuth();
+
+        showLogin();
+
+        return;
+
+    }
+
+
+    /*
+     * Hide all pages.
+     */
+
+    document
+        .querySelectorAll(
+            ".page"
+        )
+        .forEach(
+            page => {
+
+                page.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+    /*
+     * Show selected page.
+     */
+
+    const section =
+        document.getElementById(
+            sectionName
+        );
+
+
+    if (section) {
+
+        section.classList.add(
+            "active"
+        );
+
+    }
+
+
+    /*
+     * Update navigation.
+     */
+
+    document
+        .querySelectorAll(
+            ".nav button"
+        )
+        .forEach(
+            button => {
+
+                button.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+    const navButton =
+        document.getElementById(
+            `nav-${sectionName}`
+        );
+
+
+    if (navButton) {
+
+        navButton.classList.add(
+            "active"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   UPLOAD RESUME
+===================================================== */
+
+async function uploadResume() {
+
+    /*
+     * USER MUST BE LOGGED IN
+     */
+
+    if (!USER_ID) {
+
+        showAuth();
+
+        showLogin();
+
+        return;
+
+    }
+
+
+    const file =
+        document.getElementById(
+            "resumeFile"
+        ).files[0];
+
+
+    if (!file) {
+
+        showToast(
+            "Please select a PDF resume."
+        );
+
+        return;
+
+    }
+
+
+    if (
+        file.type !==
+        "application/pdf"
+    ) {
+
+        showToast(
+            "Only PDF files are allowed."
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        showLoading(
+            "Uploading and extracting resume..."
+        );
+
+
+        const formData =
+            new FormData();
+
+
+        formData.append(
+            "file",
+            file
+        );
+
+
+        /*
+         * REAL BACKEND REQUEST
+         */
+
+        const response =
+            await fetch(
+                `${API_URL}/resumes/${USER_ID}`,
+                {
+                    method: "POST",
+
+                    body: formData
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.detail ||
+                "Resume upload failed."
+            );
+
+        }
+
+
+        /*
+         * SAVE REAL RESUME ID
+         */
+
+        RESUME_ID =
+            data.resume_id;
+
+
+        localStorage.setItem(
+            "career_resume_id",
+            RESUME_ID
+        );
+
+
+        document.getElementById(
+            "resumeStatus"
+        ).textContent =
+            `✓ Resume uploaded successfully: ${file.name}`;
+
+
+        showToast(
+            "Resume uploaded successfully."
+        );
+
+
+    }
+    catch (error) {
+
+        showToast(
+            error.message
+        );
+
+    }
+    finally {
+
+        hideLoading();
+
+    }
+
+}
+
+
+/* =====================================================
+   SEARCH JOBS
+===================================================== */
+
+async function searchJobs() {
+
+    /*
+     * USER MUST BE LOGGED IN
+     */
+
+    if (!USER_ID) {
+
+        showAuth();
+
+        showLogin();
+
+        return;
+
+    }
+
+
+    /*
+     * RESUME REQUIRED
+     */
+
+    if (!RESUME_ID) {
+
+        showToast(
+            "Please upload your resume first."
+        );
+
+        showSection(
+            "resume"
+        );
+
+        return;
+
+    }
+
+
+    const jobTitle =
+        document.getElementById(
+            "jobTitle"
+        ).value.trim();
+
+
+    if (!jobTitle) {
+
+        showToast(
+            "Please enter a job title."
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        showLoading(
+            "AI agent is searching and matching jobs..."
+        );
+
+
+        document.getElementById(
+            "jobsContainer"
+        ).innerHTML = "";
+
+
+        /*
+         * REAL BACKEND REQUEST
+         */
+
+        const response =
+            await fetch(
+                `${API_URL}/jobs/search/${USER_ID}`,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        resume_id:
+                            Number(RESUME_ID),
+
+                        job_title:
+                            jobTitle
+
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.detail ||
+                "Job search failed."
+            );
+
+        }
+
+
+        /*
+         * DISPLAY REAL JOBS
+         */
+
+        renderJobs(
+            data.jobs || []
+        );
+
+
+    }
+    catch (error) {
+
+        showToast(
+            error.message
+        );
+
+    }
+    finally {
+
+        hideLoading();
+
+    }
+
+}
+
+
+/* =====================================================
+   RENDER JOBS
+===================================================== */
+
+function renderJobs(jobs) {
+
+    const container =
+        document.getElementById(
+            "jobsContainer"
+        );
+
+
+    container.innerHTML = "";
+
+
+    if (!jobs.length) {
+
+        container.innerHTML = `
+
+            <div class="job-card">
+
+                <h3>
+                    No matching jobs found
+                </h3>
+
+                <p class="company">
+                    Try another job title.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    jobs.forEach(
+        job => {
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "job-card";
+
+
+            const score =
+                job.match_score !== null &&
+                job.match_score !== undefined
+                    ? `${job.match_score}%`
+                    : "N/A";
+
+
+            card.innerHTML = `
+
+                <div class="job-top">
+
+                    <div>
+
+                        <h3>
+                            ${escapeHTML(
+                                job.job_title ||
+                                "Job"
+                            )}
+                        </h3>
+
+                        <div class="company">
+
+                            ${escapeHTML(
+                                job.company ||
+                                "Company unavailable"
+                            )}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="score">
+
+                        ${escapeHTML(score)}
+
+                    </div>
+
+                </div>
+
+
+                <div class="job-info">
+
+                    ${
+                        job.location
+                        ? `
+                            <span>
+                                📍
+                                ${escapeHTML(
+                                    job.location
+                                )}
+                            </span>
+                        `
+                        : ""
+                    }
+
+
+                    ${
+                        job.job_type
+                        ? `
+                            <span>
+                                💼
+                                ${escapeHTML(
+                                    job.job_type
+                                )}
+                            </span>
+                        `
+                        : ""
+                    }
+
+
+                    ${
+                        job.experience
+                        ? `
+                            <span>
+                                Experience:
+                                ${escapeHTML(
+                                    job.experience
+                                )}
+                            </span>
+                        `
+                        : ""
+                    }
+
+
+                    ${
+                        job.salary
+                        ? `
+                            <span>
+                                Salary:
+                                ${escapeHTML(
+                                    job.salary
+                                )}
+                            </span>
+                        `
+                        : ""
+                    }
+
+
+                    ${
+                        job.posted_date
+                        ? `
+                            <span>
+                                Posted:
+                                ${escapeHTML(
+                                    job.posted_date
+                                )}
+                            </span>
+                        `
+                        : ""
+                    }
+
+                </div>
+
+
+                ${
+                    job.description
+                    ? `
+                        <div class="job-description">
+
+                            ${escapeHTML(
+                                job.description
+                            )}
+
+                        </div>
+                    `
+                    : ""
+                }
+
+
+                ${
+                    job.why_match
+                    ? `
+                        <div class="why-match">
+
+                            <strong>
+                                Why this matches:
+                            </strong>
+
+                            ${escapeHTML(
+                                job.why_match
+                            )}
+
+                        </div>
+                    `
+                    : ""
+                }
+
+
+                ${
+                    safeURL(
+                        job.apply_url
+                    )
+                    ? `
+                        <a
+                            class="apply"
+                            href="${safeURL(
+                                job.apply_url
+                            )}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            View & Apply →
+                        </a>
+                    `
+                    : ""
+                }
+
+            `;
+
+
+            container.appendChild(
+                card
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   HTML SECURITY
+===================================================== */
+
+function escapeHTML(
+    value
+) {
+
+    if (
+        value === null ||
+        value === undefined
+    ) {
+
+        return "";
+
+    }
+
+
+    return String(value)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* =====================================================
+   SAFE URL
+===================================================== */
+
+function safeURL(
+    url
+) {
+
+    if (!url) {
+
+        return "";
+
+    }
+
+
+    try {
+
+        const parsed =
+            new URL(url);
+
+
+        if (
+            parsed.protocol === "http:" ||
+            parsed.protocol === "https:"
+        ) {
+
+            return escapeHTML(
+                parsed.href
+            );
+
+        }
+
+
+        return "";
+
+    }
+    catch {
+
+        return "";
+
+    }
+
+}
+
+
+/* =====================================================
+   LOADING
+===================================================== */
+
+function showLoading(
+    message
+) {
+
+    document.getElementById(
+        "loadingText"
+    ).textContent =
+        message;
+
+
+    document.getElementById(
+        "loading"
+    ).style.display =
+        "flex";
+
+}
+
+
+function hideLoading() {
+
+    document.getElementById(
+        "loading"
+    ).style.display =
+        "none";
+
+}
+
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+function showToast(
+    message
+) {
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    toast.textContent =
+        message;
+
+
+    toast.style.display =
+        "block";
+
+
+    setTimeout(
+        () => {
+
+            toast.style.display =
+                "none";
+
+        },
+        3000
+    );
+
+}
+
+
+</script>
+
+</body>
+
+</html>
