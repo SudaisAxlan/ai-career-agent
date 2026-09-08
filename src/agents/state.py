@@ -1,7 +1,7 @@
 from typing import TypedDict
 
 
-class CareerAgentState(TypedDict, total=False):
+class StateAgent(TypedDict, total=False):
     user_question: str
     user_profile: str
     search_plan: str
