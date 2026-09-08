@@ -40,5 +40,6 @@ app.include_router(auth_router)
 @app.get("/")
 def home():
     return {
-        "message": "AI Career Agent API is running agaon"
+        "message": "AI Career Agent API is running Again"
     }
+
